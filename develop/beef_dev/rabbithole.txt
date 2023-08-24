@@ -1,0 +1,52 @@
+
+
+
+
+
+
+
+
+
+
+# self.eldef.deform(L @ u)    # deform nodes in part given by u => new f_int and K from elements
+
+assembly.eldef.deform
+
+
+    element.update() (for all el in eldef)
+        self.update_nonlinear
+            self.update_e2()                        # update base vectors of element from rotations of nodes 
+                # ASSUME OK FOR NOW
+            self.update_geometry() 
+
+                self.L = self.get_length()
+                self.e = self.get_e()
+
+                self.tmat = self.get_tmat() 
+                    # NO Z?
+                self.psi = self.get_psi(return_phi=False)
+
+        # assigns .tmat (new e2 --> change), .L, .e, .psi from methods
+            self.update_q()
+            self.update_k()                         # new tangent stiffness (Eq. 5.129 in Krenk [1])
+        
+    self.update_tangent_stiffness()
+        
+        self.k = self.get_feature_mats(mats=['k'])         
+        
+        for el in self.elements:
+            self.k[np.ix_(el.global_dofs, el.global_dofs)] += el.k
+    
+    
+    self.update_internal_forces()
+    
+    
+    ############################
+    ############################
+    ############################
+    ############################
+    
+    analysis: Linv=func dof_pairs_to_Linv
+                B=compatibility_matrix
+                L=nullspace(B)
+    
