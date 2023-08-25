@@ -25,7 +25,7 @@ def generateintro(fid,abaqus,bearing,bridgedeck,cable,geo,hanger,modal,sadle,ste
     gen.comment(fid,comment)
     gen.comment(fid,['Part of abaqustools package','Oyvind Wiig Petersen, NTNU'])
     
-    gen.Line(fid,'**')
+    gen.line(fid,'**')
 
     struct_all=[None]*11
     struct_all[0]=abaqus
