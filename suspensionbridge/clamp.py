@@ -9,7 +9,7 @@ Created on
 
 import numpy as np
 import putools
-from abaqustools import gen
+from abaqustools import kw
 from .mesh import *
 
 #%%
@@ -79,7 +79,7 @@ def clampgeometry(fid,meta,cable):
 
     clampmesh.generate(fid)
     
-    gen.beamgeneralsection(fid,'CABLE_CLAMP',7850,[4e-3 , 1e-7 , 0 , 1e-7 , 1e-7],[0, 1, 0],[210e9,81e9,1e-5])
+    kw.beamgeneralsection(fid,'CABLE_CLAMP',7850,[4e-3 , 1e-7 , 0 , 1e-7 , 1e-7],[0, 1, 0],[210e9,81e9,1e-5])
     
         
 #%% 

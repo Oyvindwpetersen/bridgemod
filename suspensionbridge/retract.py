@@ -94,13 +94,13 @@ def estimatepullbackforce(tower,geo,abaqus):
     
     #%%  Materials
 
-    gen.comment(fid,'MATERIALS',False)
+    kw.comment(fid,'MATERIALS',False)
 
-    gen.material(fid,'CONCRETE',tower.cs.E,tower.cs.v,tower.cs.rho)
+    kw.material(fid,'CONCRETE',tower.cs.E,tower.cs.v,tower.cs.rho)
 
     #%%  Part
 
-    gen.part(fid,abaqus.partname)
+    kw.part(fid,abaqus.partname)
 
     #%%  Tower
 
@@ -113,34 +113,34 @@ def estimatepullbackforce(tower,geo,abaqus):
 
     #%%  Part, instance, assembly
 
-    gen.partend(fid)
+    kw.partend(fid)
 
-    gen.comment(fid,'ASSEMBLY',False)
+    kw.comment(fid,'ASSEMBLY',False)
 
-    gen.assembly(fid,abaqus.assemblyname)
+    kw.assembly(fid,abaqus.assemblyname)
 
-    gen.instance(fid,abaqus.partname,abaqus.partname)
+    kw.instance(fid,abaqus.partname,abaqus.partname)
 
-    gen.instanceend(fid)
+    kw.instanceend(fid)
 
-    gen.assemblyend(fid)
+    kw.assemblyend(fid)
 
     #%%  Step
 
-    gen.step(fid,'NLGEO=YES, NAME=STEP0','')
-    gen.static(fid,['1e-2, 1, 1e-6, 1'])
+    kw.step(fid,'NLGEO=YES, NAME=STEP0','')
+    kw.static(fid,['1e-2, 1, 1e-6, 1'])
 
-    gen.cload(fid,'NEW',['Tower_top_south_east','Tower_top_south_west'],1,UnitLoadSouth,abaqus.partname)
-    gen.cload(fid,'NEW',['Tower_top_north_east','Tower_top_north_west'],1,UnitLoadNorth,abaqus.partname)
+    kw.cload(fid,'NEW',['Tower_top_south_east','Tower_top_south_west'],1,UnitLoadSouth,abaqus.partname)
+    kw.cload(fid,'NEW',['Tower_top_north_east','Tower_top_north_west'],1,UnitLoadNorth,abaqus.partname)
     
-    gen.gravload(fid,'new',[''],9.81)
+    kw.gravload(fid,'new',[''],9.81)
     
-    gen.boundary(fid,'new','Tower_base',[1,6,0],abaqus.partname)
+    kw.boundary(fid,'new','Tower_base',[1,6,0],abaqus.partname)
 
-    gen.fieldoutput(fid,'NODE',['U' , 'RF' , 'COORD'],'','FREQUENCY=100')
-    gen.fieldoutput(fid,'ELEMENT',['SF'],'','FREQUENCY=100')
+    kw.fieldoutput(fid,'NODE',['U' , 'RF' , 'COORD'],'','FREQUENCY=100')
+    kw.fieldoutput(fid,'ELEMENT',['SF'],'','FREQUENCY=100')
     
-    gen.stepend(fid)
+    kw.stepend(fid)
     
     #%%  Close file
 

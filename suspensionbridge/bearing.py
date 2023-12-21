@@ -8,7 +8,7 @@ Created on
 #%%
 
 import numpy as np
-from abaqustools import gen
+from abaqustools import kw
 from .mesh import *
 
 #%%
@@ -154,7 +154,7 @@ def bearinggeometry(fid,meta,geo,bearing):
 
                 elset_temp='BEARINGSPRING' + str(n+1) + '_' + S_or_N[j] + '_' + spring_dof[idx_dof]
                 
-                gen.spring(fid,elset_temp,el_node_matrix_temp,dof_number,k_spring)
+                kw.spring(fid,elset_temp,el_node_matrix_temp,dof_number,k_spring)
                 elset_bearing_dof[idx_dof]=elset_temp
 
 
@@ -191,12 +191,12 @@ def bearinggeometry(fid,meta,geo,bearing):
 
     bearingmesh.generate(fid)
     
-    gen.beamgeneralsection(fid,'BEARINGTOP',0,[0.1,1,0,1,1],[1,0,0],[210e9*10,81e9*10])
-    gen.beamgeneralsection(fid,'BEARINGLOW',0,[0.1,1,0,1,1],[1,0,0],[210e9*10,81e9*10])
+    kw.beamgeneralsection(fid,'BEARINGTOP',0,[0.1,1,0,1,1],[1,0,0],[210e9*10,81e9*10])
+    kw.beamgeneralsection(fid,'BEARINGLOW',0,[0.1,1,0,1,1],[1,0,0],[210e9*10,81e9*10])
     
-    gen.beamsection(fid,'BEARINGPENDULUM','STEEL','BOX',[0.2,0.2,0.02,0.02,0.02,0.02],[0,1,0])
+    kw.beamsection(fid,'BEARINGPENDULUM','STEEL','BOX',[0.2,0.2,0.02,0.02,0.02,0.02],[0,1,0])
 
-    gen.release(fid,'BEARINGPENDULUM',['S1' , 'S2'],'M1-M2')
+    kw.release(fid,'BEARINGPENDULUM',['S1' , 'S2'],'M1-M2')
 
 
 

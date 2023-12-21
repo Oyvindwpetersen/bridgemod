@@ -9,7 +9,7 @@ Created on
 
 import numpy as np
 import putools
-from abaqustools import gen
+from abaqustools import kw
 import warnings
 from .mesh import *
 
@@ -82,10 +82,10 @@ def towergeometry(fid,meta,geo,tower):
 #%%  Elset for each cross sections of tower
 
     for k in np.arange(len(elnum_south_east)):
-        gen.elset(fid,'Tower_south_cs_' + str(k+1).zfill(3),[elnum_south_east[k],elnum_south_west[k]])
+        kw.elset(fid,'Tower_south_cs_' + str(k+1).zfill(3),[elnum_south_east[k],elnum_south_west[k]])
     
     for k in np.arange(len(elnum_north_east)):
-        gen.elset(fid,'Tower_north_cs_' + str(k+1).zfill(3),[elnum_north_east[k],elnum_north_west[k]])
+        kw.elset(fid,'Tower_north_cs_' + str(k+1).zfill(3),[elnum_north_east[k],elnum_north_west[k]])
     
 
 #%%  Sets
@@ -201,13 +201,13 @@ def towergeometry(fid,meta,geo,tower):
             b_interp=np.interp(z_north_east[k],tower.cs.z_vec,tower.cs.b_vec)
             t_interp=np.interp(z_north_east[k],tower.cs.z_vec,tower.cs.t_vec)
             
-            gen.beamsection(fid,'Tower_south_cs_' + str(k+1).zfill(3),'CONCRETE','BOX',[b_interp,h_interp,t_interp,t_interp,t_interp,t_interp],tower.normaldir)
-            gen.beamsection(fid,'Tower_north_cs_' + str(k+1).zfill(3),'CONCRETE','BOX',[b_interp,h_interp,t_interp,t_interp,t_interp,t_interp],tower.normaldir)
+            kw.beamsection(fid,'Tower_south_cs_' + str(k+1).zfill(3),'CONCRETE','BOX',[b_interp,h_interp,t_interp,t_interp,t_interp,t_interp],tower.normaldir)
+            kw.beamsection(fid,'Tower_north_cs_' + str(k+1).zfill(3),'CONCRETE','BOX',[b_interp,h_interp,t_interp,t_interp,t_interp,t_interp],tower.normaldir)
             
 
     for k in np.arange(len(z_crossbeam_all)):
         elset=[ 'Tower_crossbeam_SOUTH' + '_' + str(k+1) , 'Tower_crossbeam_NORTH' + '_' + str(k+1)]
-        gen.beamsection(fid,elset,'CONCRETE','BOX',[tower.b_crossbeam[k],tower.h_crossbeam[k],tower.t_crossbeam[k],tower.t_crossbeam[k],tower.t_crossbeam[k],tower.t_crossbeam[k]],[1,0,0])
+        kw.beamsection(fid,elset,'CONCRETE','BOX',[tower.b_crossbeam[k],tower.h_crossbeam[k],tower.t_crossbeam[k],tower.t_crossbeam[k],tower.t_crossbeam[k],tower.t_crossbeam[k]],[1,0,0])
 
 
 # Stiff beam from crossbeam center to surface
@@ -218,23 +218,23 @@ def towergeometry(fid,meta,geo,tower):
     for k in np.arange(len(tower.z_crossbeam_south)):
     
         idx=np.argmin(np.abs(z_south_east-tower.z_crossbeam_south[k]))
-        gen.nset(fid,['Tower_leg_south_crossbeam_' + str(k+1) + '_start'],nodenum_south_east[idx])
-        gen.mpc(fid,'BEAM',['Tower_crossbeam_south_' + str(k+1) + '_start' , 'Tower_leg_south_crossbeam_' + str(k+1) + '_start'])
+        kw.nset(fid,['Tower_leg_south_crossbeam_' + str(k+1) + '_start'],nodenum_south_east[idx])
+        kw.mpc(fid,'BEAM',['Tower_crossbeam_south_' + str(k+1) + '_start' , 'Tower_leg_south_crossbeam_' + str(k+1) + '_start'])
 
         idx=np.argmin(np.abs(z_south_west-tower.z_crossbeam_south[k]))
-        gen.nset(fid,['Tower_leg_south_crossbeam_' + str(k+1) + '_end'],nodenum_south_west[idx])
-        gen.mpc(fid,'BEAM',['Tower_crossbeam_south_' + str(k+1) + '_end' , 'Tower_leg_south_crossbeam_' + str(k+1) + '_end'])
+        kw.nset(fid,['Tower_leg_south_crossbeam_' + str(k+1) + '_end'],nodenum_south_west[idx])
+        kw.mpc(fid,'BEAM',['Tower_crossbeam_south_' + str(k+1) + '_end' , 'Tower_leg_south_crossbeam_' + str(k+1) + '_end'])
 
 
     for k in np.arange(len(tower.z_crossbeam_north)):
     
         idx=np.argmin(np.abs(z_south_east-tower.z_crossbeam_north[k]))
-        gen.nset(fid,['Tower_leg_north_crossbeam_' + str(k+1) + '_start'],nodenum_north_east[idx])
-        gen.mpc(fid,'BEAM',['Tower_crossbeam_north_' + str(k+1) + '_start' , 'Tower_leg_north_crossbeam_' + str(k+1) + '_start'])
+        kw.nset(fid,['Tower_leg_north_crossbeam_' + str(k+1) + '_start'],nodenum_north_east[idx])
+        kw.mpc(fid,'BEAM',['Tower_crossbeam_north_' + str(k+1) + '_start' , 'Tower_leg_north_crossbeam_' + str(k+1) + '_start'])
 
         idx=np.argmin(np.abs(z_south_west-tower.z_crossbeam_north[k]))
-        gen.nset(fid,['Tower_leg_north_crossbeam_' + str(k+1) + '_end'],nodenum_north_west[idx])
-        gen.mpc(fid,'BEAM',['Tower_crossbeam_north_' + str(k+1) + '_end' , 'Tower_leg_north_crossbeam_' + str(k+1) + '_end'])
+        kw.nset(fid,['Tower_leg_north_crossbeam_' + str(k+1) + '_end'],nodenum_north_west[idx])
+        kw.mpc(fid,'BEAM',['Tower_crossbeam_north_' + str(k+1) + '_end' , 'Tower_leg_north_crossbeam_' + str(k+1) + '_end'])
 
 
 #%% 

@@ -14,7 +14,7 @@ Created on
 #from ypstruct import *
 import numpy as np
 import putools
-from abaqustools import gen
+from abaqustools import kw
 
 #%% 
 
@@ -74,7 +74,7 @@ class mesh_node_el:
         for k in np.arange(len(self.node_matrix)):
         
             if self.node_matrix_isgen[k]==False:             
-                gen.node(fid,self.node_matrix[k],self.node_matrix_name[k])
+                kw.node(fid,self.node_matrix[k],self.node_matrix_name[k])
                 self.node_matrix_isgen[k]=True
         
         # Elements
@@ -82,21 +82,21 @@ class mesh_node_el:
         
             if self.el_matrix_isgen[k]==False:
                 #print(self.el_matrix_name[k])
-                gen.element(fid,self.el_matrix[k],self.el_matrix_type[k],self.el_matrix_name[k])
+                kw.element(fid,self.el_matrix[k],self.el_matrix_type[k],self.el_matrix_name[k])
                 self.el_matrix_isgen[k]=True
         
         # Node sets
         for k in np.arange(len(self.node_set)):
         
             if self.node_set_isgen[k]==False:
-                gen.nset(fid,self.node_set_name[k],self.node_set[k])
+                kw.nset(fid,self.node_set_name[k],self.node_set[k])
                 self.node_set_isgen[k]=True
         
         # Element sets            
         for k in np.arange(len(self.el_set)):
         
             if self.el_set_isgen[k]==False:
-                gen.elset(fid,self.el_set_name[k],self.el_set[k])
+                kw.elset(fid,self.el_set_name[k],self.el_set[k])
                 self.el_set_isgen[k]=True 
             
 

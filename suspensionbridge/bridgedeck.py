@@ -10,7 +10,7 @@ Created on
 import numpy as np
 from numpy import matlib
 import putools
-from abaqustools import gen
+from abaqustools import kw
 from .mesh import *
 
 
@@ -307,26 +307,26 @@ def bridgedeckgeometry(fid,meta,geo,bridgedeck):
     elif bridgedeck.N_box==2:
         ElementName=['Bridgedeck1_cog' , 'Bridgedeck2_cog']
 
-    gen.beamgeneralsection(fid,'LatConnOuter',0,[0.1,1,0,1,1],[1,0,0],[210e9*10,81e9*10])
+    kw.beamgeneralsection(fid,'LatConnOuter',0,[0.1,1,0,1,1],[1,0,0],[210e9*10,81e9*10])
             
     for n in np.arange(bridgedeck.N_box):
 
-            gen.beamgeneralsection(fid,ElementName[n],bridgedeck.cs.rho[n],[bridgedeck.cs.A[n],bridgedeck.cs.I11[n],bridgedeck.cs.I12[n],bridgedeck.cs.I22[n],bridgedeck.cs.It[n]],bridgedeck.normaldir,[bridgedeck.cs.E[n],bridgedeck.cs.G[n]])
-            gen.beamaddedinertia(fid,bridgedeck.inertia.m[n],bridgedeck.inertia.x1[n],bridgedeck.inertia.x2[n],bridgedeck.inertia.alpha[n],bridgedeck.inertia.I11[n],bridgedeck.inertia.I22[n],bridgedeck.inertia.I12[n])
-            gen.shearcenter(fid,bridgedeck.cs.sc1[n],bridgedeck.cs.sc2[n])
+            kw.beamgeneralsection(fid,ElementName[n],bridgedeck.cs.rho[n],[bridgedeck.cs.A[n],bridgedeck.cs.I11[n],bridgedeck.cs.I12[n],bridgedeck.cs.I22[n],bridgedeck.cs.It[n]],bridgedeck.normaldir,[bridgedeck.cs.E[n],bridgedeck.cs.G[n]])
+            kw.beamaddedinertia(fid,bridgedeck.inertia.m[n],bridgedeck.inertia.x1[n],bridgedeck.inertia.x2[n],bridgedeck.inertia.alpha[n],bridgedeck.inertia.I11[n],bridgedeck.inertia.I22[n],bridgedeck.inertia.I12[n])
+            kw.shearcenter(fid,bridgedeck.cs.sc1[n],bridgedeck.cs.sc2[n])
             
             
     if bridgedeck.N_box==2:
         
-        gen.beamgeneralsection(fid,'LatConnInner',0,[0.1,1,0,1,1],[1,0,0],[210e9*10,81e9*10])
+        kw.beamgeneralsection(fid,'LatConnInner',0,[0.1,1,0,1,1],[1,0,0],[210e9*10,81e9*10])
 
         if bridgedeck.gapbeam.type.upper()=='BOX':
-            gen.beamsection(fid,'LatConnGap','Steel','BOX',[bridgedeck.gapbeam.b , bridgedeck.gapbeam.h , bridgedeck.gapbeam.t , bridgedeck.gapbeam.t , bridgedeck.gapbeam.t , bridgedeck.gapbeam.t],[1,0,0])
+            kw.beamsection(fid,'LatConnGap','Steel','BOX',[bridgedeck.gapbeam.b , bridgedeck.gapbeam.h , bridgedeck.gapbeam.t , bridgedeck.gapbeam.t , bridgedeck.gapbeam.t , bridgedeck.gapbeam.t],[1,0,0])
         elif bridgedeck.gapbeam.type.upper()=='STIFF':
-            gen.beamgeneralsection(fid,'LatConnGap',0,[0.1,1,0,1,1],[1,0,0],[210e9*10,81e9*10])
+            kw.beamgeneralsection(fid,'LatConnGap',0,[0.1,1,0,1,1],[1,0,0],[210e9*10,81e9*10])
 
     
-    gen.shellsection(fid,'Bridgedeck_shell','SOFT','OFFSET=SNEG',[0.01 , 3])
+    kw.shellsection(fid,'Bridgedeck_shell','SOFT','OFFSET=SNEG',[0.01 , 3])
 
     
 

@@ -8,7 +8,7 @@ Created on Sat Jan 22 09:31:11 2022
 
 import numpy as np
 import putools
-from abaqustools import gen
+from abaqustools import kw
 import datetime
 
 from ypstruct import *
@@ -22,10 +22,10 @@ def generateintro(fid,abaqus,bearing,bridgedeck,cable,geo,hanger,modal,sadle,ste
     c=datetime.datetime.now().isoformat()
     comment.append('Model input generated ' + c[:-7])
 
-    gen.comment(fid,comment)
-    gen.comment(fid,['Part of abaqustools package','Oyvind Wiig Petersen, NTNU'])
+    kw.comment(fid,comment)
+    kw.comment(fid,['Part of abaqustools package','Oyvind Wiig Petersen, NTNU'])
     
-    gen.line(fid,'**')
+    kw.line(fid,'**')
 
     struct_all=[None]*11
     struct_all[0]=abaqus
@@ -84,7 +84,7 @@ def generateintro(fid,abaqus,bearing,bridgedeck,cable,geo,hanger,modal,sadle,ste
 
 
     
-    gen.comment(fid,comment,False)
+    kw.comment(fid,comment,False)
 
 #%%
 

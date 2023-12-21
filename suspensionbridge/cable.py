@@ -9,7 +9,7 @@ Created on
 
 import numpy as np
 import putools
-from abaqustools import gen
+from abaqustools import kw
 from .mesh import *
 
 #%%
@@ -178,13 +178,13 @@ def cablegeometry(fid,meta,geo,cable):
 
     cablemesh.generate(fid)
     
-    gen.beamgeneralsection(fid,'Cable_main',cable.cs.rho,[cable.cs.A , cable.cs.I11 , cable.cs.I12 , cable.cs.I22 , cable.cs.It],cable.normaldir,[cable.cs.E,cable.cs.G])
+    kw.beamgeneralsection(fid,'Cable_main',cable.cs.rho,[cable.cs.A , cable.cs.I11 , cable.cs.I12 , cable.cs.I22 , cable.cs.It],cable.normaldir,[cable.cs.E,cable.cs.G])
     
-    gen.nonstructuralmass(fid, 'Cable_main', 'MASS PER LENGTH', cable.nsmass)
+    kw.nonstructuralmass(fid, 'Cable_main', 'MASS PER LENGTH', cable.nsmass)
     
     if cable.tempsupport==True:
-        gen.beamgeneralsection(fid,'CABLE_TEMPSUPPORT',0,[0.01 , .01 , 0 , .01 , .01],[1,0,0],[210e9,81e9])
-        #gen.release(fid,'CABLE_TEMPSUPPORT',['S1' , 'S2'],'M1')
+        kw.beamgeneralsection(fid,'CABLE_TEMPSUPPORT',0,[0.01 , .01 , 0 , .01 , .01],[1,0,0],[210e9,81e9])
+        #kw.release(fid,'CABLE_TEMPSUPPORT',['S1' , 'S2'],'M1')
         
 #%% 
 

@@ -10,7 +10,7 @@ Created on
 import numpy as np
 import time
 import putools
-from abaqustools import gen
+from abaqustools import kw
 from .mesh import *
 
 #%% 
@@ -35,9 +35,9 @@ def hangergeometry(fid,meta,geo,hanger):
 
     hangermesh.generate(fid)
 
-    gen.beamgeneralsection(fid,'Hanger',hanger.cs.rho,[hanger.cs.A,hanger.cs.I11,hanger.cs.I12,hanger.cs.I22,hanger.cs.It],hanger.normaldir,[hanger.cs.E,hanger.cs.G])
+    kw.beamgeneralsection(fid,'Hanger',hanger.cs.rho,[hanger.cs.A,hanger.cs.I11,hanger.cs.I12,hanger.cs.I22,hanger.cs.It],hanger.normaldir,[hanger.cs.E,hanger.cs.G])
 
-    gen.release(fid,'Hanger',['S1' , 'S2'],'M1-M2')
+    kw.release(fid,'Hanger',['S1' , 'S2'],'M1-M2')
 
 #%% 
 
