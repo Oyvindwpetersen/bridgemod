@@ -172,7 +172,7 @@ def buildinput(UserParameterFileName,UserParameterFolder,IterateDeflection=False
     kw.cload(fid,'NEW',['Tower_top_south_east','Tower_top_south_west'],1,tower.F_pullback_south,abaqus.partname)
     kw.cload(fid,'NEW',['Tower_top_north_east','Tower_top_north_west'],1,tower.F_pullback_north,abaqus.partname)
     
-    kw.gravload(fid,'new',[''],9.81)
+    kw.gravload(fid,'new',[''],magnitude=9.81)
     
     kw.boundary(fid,'new','Tower_base',[1,6,0],abaqus.partname)
 
@@ -228,7 +228,7 @@ def buildinput(UserParameterFileName,UserParameterFolder,IterateDeflection=False
        
     
     GravList=['TOWER','CABLE_MAIN','HANGER','BRIDGEDECK','BEARINGTOP','BEARINGLOW']
-    kw.gravload(fid,'NEW',GravList,9.81,abaqus.partname)  
+    kw.gravload(fid,'NEW',GravList,magnitude=9.81,partname=abaqus.partname)  
     
     kw.fieldoutput(fid,'NODE',['U' , 'RF' , 'COORD'],'','FREQUENCY=100')
     kw.fieldoutput(fid,'ELEMENT',['SF' , 'S'],'','FREQUENCY=100')
