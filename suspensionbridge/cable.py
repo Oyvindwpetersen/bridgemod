@@ -155,16 +155,23 @@ def cablegeometry(fid,meta,geo,cable):
         
         elnum_tempsupport=510e3+np.arange(1,cable.N_tempsupport+1)
         
-        n_hanger_space=np.floor(len(x_hanger)/(cable.N_tempsupport+1)).astype(int)
+        n_hanger_space=int( np.floor(len(x_hanger)/(cable.N_tempsupport+1)) )
         
         if np.mod(cable.N_tempsupport,2)!=1:
             cable.N_tempsupport
             raise Exception('***** Number of temp cable support must be odd')
         
-        n_per_side=(cable.N_tempsupport-1)/2
-        ind_temp=np.arange(1,n_per_side+1)*n_hanger_space
-        idx_tempsupport=np.hstack((-np.flip(ind_temp),0,ind_temp))+(len(x_hanger)+1)/2
-        idx_tempsupport=idx_tempsupport.astype('int')
+        n_per_side=int( (cable.N_tempsupport-1)/2 )
+        
+        idx_tempsupport=[ int((len(x_hanger)-1)/2) ]
+        
+        for k in range(n_per_side):
+            
+            curr_outer1=idx_tempsupport[0]
+            curr_outer2=idx_tempsupport[-1]
+            
+            idx_tempsupport.insert(0, curr_outer1-n_hanger_space)
+            idx_tempsupport.append(curr_outer2+n_hanger_space)
         
         cablemesh.addel(np.column_stack((elnum_tempsupport,meta.cable.nodenum_hanger_east[idx_tempsupport],meta.cable.nodenum_hanger_west[idx_tempsupport])),'CABLE_TEMPSUPPORT','B31')
     
